@@ -46,3 +46,37 @@ Test your new function; I've provided some basic testing code in `code.test.js`.
 What is the worst-case asymptotic time complexity of your implementation? What
 is the worst-case asymptotic memory complexity? Add your answer, including your
 reasoning, to this markdown file.
+
+The steps of this algorithm are:
+1. Create the list of cities. $\Theta(|V|)$
+2. Call held karp for each city to check which starting city's cost is the smallest. $\Theta(|V|)$
+    1. Recursively find the shortest path from a start city. With memoization, this is $\Theta(|V|\cdot2^{|V|})$ since there are $2^{|V|}$ subsets to go through and on the worst case we will loop over $|V|$ cities for each level of recursion
+
+
+The runtime equation is:
+
+$T(n) = |V| + |V| \cdot |V|\cdot2^{|V|}$
+
+Ignoring the asymptotically insignificant terms, we can conclude that
+
+$T(n) \in \Theta(|V|^{2}2^{|V|})$
+
+The memory complexity consist of 
+1. The number of cities $(|V|)$
+2. The number of subsets stored in the cache $(2^{|V|})$
+    1. The city stored with the subset $(|V|)$
+
+The cache storage has the asymptotically significant term, so the memory complexity is $\Theta(|V|\cdot 2^{|V|})$
+
+#### Sources
+
+[This](https://javascript.plainenglish.io/efficient-js-memoization-using-map-86f1f4735cc) article for javascript memoization
+
+[This](https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array-in-javascript) forum for removing a specific index from an array
+
+
+"I certify that I have listed all sources used to complete this exercise,
+including the use of any Large Language Models. All of the work is my own, except
+where stated otherwise. I am aware that plagiarism carries severe penalties and
+that if plagiarism is suspected, charges may be filed against me without prior
+notice."
