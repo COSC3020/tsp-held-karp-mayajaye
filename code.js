@@ -7,12 +7,12 @@ function tsp_hk(distance_matrix) {
     let n = distance_matrix.length;
     let minCost = Infinity;
     let cities = [];
+    let cache = new Map(); //create a map for memoization for all start cities
 
     if (n <= 1) return 0;
 
     for (let i = 0; i < n; i++) cities.push(i); //create the list of cities
     for (let start = 0; start < n; start++) { //get the minimum cost out of all the start cities
-        let cache = new Map(); //create a map for memoization for every call
         minCost = Math.min(minCost, heldKarp(cities, start, distance_matrix, cache));
     }
     return minCost;
@@ -20,7 +20,9 @@ function tsp_hk(distance_matrix) {
 }    
 
 function heldKarp(cities, start, distance_matrix, cache) {
-    let key = cities.join('|') + '|' + start; //initialize the key for the subset of cities and the current start city
+    let sortedCities = cities.slice();
+    sortedCities.sort(function(a, b) {return a - b;}); //sort the subsets for if the cities are the same set in a different order
+    let key = sortedCities.join('|') + '|' + start; //initialize the key for the subset of cities and the current start city
     if (cache.has(key)) return cache.get(key); //returned cached result of this level if it exists
 
     if (cities.length == 2) {
